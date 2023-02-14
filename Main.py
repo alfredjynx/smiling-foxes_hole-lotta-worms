@@ -1,10 +1,13 @@
 import pygame
 import numpy as np
-
+from classes.Header import Header
 pygame.init()
 
+
+
+
 # Tamanho da tela e definição do FPS
-screen = pygame.display.set_mode((400, 400))
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 FPS = 60  # Frames per Second
 
@@ -27,12 +30,20 @@ corpo2 = np.array([300,300])
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
+
+header = Header(screen)
+
 rodando = True
 while rodando:
     # Capturar eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rodando = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                print("mouse down")
+                header.atualiza_estado()
 
     for i in range(N):
         if s[i][0]<10 or s[i][0]>390 or s[i][1]<10 or s[i][1]>390: # Se eu chegar ao limite da tela, reinicio a posição do personagem
@@ -76,6 +87,9 @@ while rodando:
     for i in range(N):
         rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
         screen.blit(personagem, rect)
+
+    # Desenhar header
+    header.desenha()
 
     pygame.draw.circle(screen,"BLUE",corpo,15,0)
     pygame.draw.circle(screen,"RED",corpo2,15,0)
