@@ -1,84 +1,92 @@
 import pygame
 import numpy as np
+from classes.Planetas import Planeta
 
 pygame.init()
 
 # Tamanho da tela e definição do FPS
-screen = pygame.display.set_mode((400, 400))
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 FPS = 60  # Frames per Second
 
 BLACK = (0, 0, 0, 0.2)
 COR_PERSONAGEM = (30, 200, 20)
-N = 1000
+N = 0
 # Inicializar posicoes
-s0 = np.array([50,200])
+s0 = np.array([100,400])
 v0 = np.array([10, -10])
 # a = np.array([0, 0.2])
 v = [v0 for i in range(N)]
 s = [s0 for i in range(N)]
-corpo = np.array([100,100])
-corpo2 = np.array([300,300])
+c = 350
+pos1 = np.array([200,200])
+corpo = Planeta(pos1,c)
+pos2 = np.array([600,300])
+corpo2 = Planeta(pos2,c)
 # corpo = np.array([200,200])
 # v = v0
 # s = s0
-
+n = N
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
 rodando = True
+mouse_click = False
 while rodando:
     # Capturar eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rodando = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_click = True
 
-    for i in range(N):
-        if s[i][0]<10 or s[i][0]>390 or s[i][1]<10 or s[i][1]>390: # Se eu chegar ao limite da tela, reinicio a posição do personagem
-            rndm = np.random.randn(2)
-            mous_pos = pygame.mouse.get_pos()
-            v1 = mous_pos-s0
-            norm = np.linalg.norm(v1)
-            s[i], v[i] = s0, v1/norm*10+rndm*4
+    mous_pos = pygame.mouse.get_pos()
+    rndm = np.random.randn(2)
+    v1 = mous_pos-s0
+    norm = np.linalg.norm(v1)
+
+    if mouse_click:
+        v.append((v1/norm*10+rndm*0.2))
+        s.append(s0)
+
+    # em_jogo = list()
+
+    for i in range(n):
+        valor = True
+        if s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590: # Se eu chegar ao limite da tela, reinicio a posição do personagem
+            s[i], v[i] = s0, v1/norm*10+rndm*0.2
+        #     valor = False
+        # em_jogo.append(valor)
+
+
+    # try:
+    #     v = [v[i] for i in range(len(v)) if em_jogo[i]==True]
+    # except:
+    #     pass
 
     # Controlar frame rate
     clock.tick(FPS)
 
     # Processar posicoes
-    for i in range(N):
-        C = 350
-        y = corpo - s[i]
-        d = np.linalg.norm(y)
-        direcao_a = y /d
-
-        mag_a = C / d**2
-        a = direcao_a * mag_a
-
-        y2 = corpo2 - s[i]
-        d2 = np.linalg.norm(y2)
-        direcao_a2 = y2/d2
-
-        mag_a2 = C/d2**2
-        a2 = direcao_a2 * mag_a2
-
-        v[i] = v[i] + a*5 + a2*15 
-        # v[i] = v[i] + a*10
+    for i in range(n):
+        v[i] = v[i] + corpo.calcula_a(s[i])*5 + corpo2.calcula_a(s[i])*10
         s[i] = s[i] + 0.1 * v[i]
 
-    # v = v + a
-    # s = s + 0.1 * v
 
     # Desenhar fundo
     screen.fill(BLACK)
 
     # Desenhar personagem
-    for i in range(N):
+    for i in range(n):
         rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
         screen.blit(personagem, rect)
 
-    pygame.draw.circle(screen,"BLUE",corpo,15,0)
-    pygame.draw.circle(screen,"RED",corpo2,15,0)
+    pygame.draw.circle(screen,"BLUE",corpo.get_pos(),15,0)
+    pygame.draw.circle(screen,"RED",corpo2.get_pos(),15,0)
+  
+    mouse_click = False
+    n = len(v)
 
     # Update!
     pygame.display.update()
