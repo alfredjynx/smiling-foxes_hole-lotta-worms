@@ -11,13 +11,12 @@ FPS = 60  # Frames per Second
 
 BLACK = (0, 0, 0, 0.2)
 COR_PERSONAGEM = (30, 200, 20)
-N = 0
 # Inicializar posicoes
 s0 = np.array([100,400])
 v0 = np.array([10, -10])
 # a = np.array([0, 0.2])
-v = [v0 for i in range(N)]
-s = [s0 for i in range(N)]
+v = list()
+s = list()
 c = 350
 pos1 = np.array([200,200])
 corpo = Planeta(pos1,c)
@@ -26,7 +25,7 @@ corpo2 = Planeta(pos2,c)
 # corpo = np.array([200,200])
 # v = v0
 # s = s0
-n = N
+n = len(v)
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_PERSONAGEM)  # Cor do personagem
@@ -42,29 +41,35 @@ while rodando:
             mouse_click = True
 
     mous_pos = pygame.mouse.get_pos()
-    rndm = np.random.randn(2)
+    rndm = np.random.randn(2)*0.2
     v1 = mous_pos-s0
     norm = np.linalg.norm(v1)
 
     if mouse_click:
-        v.append((v1/norm*10+rndm*0.2))
+        v.append((v1/norm*10+rndm))
         s.append(s0)
+        mouse_click = False
+    
+    n = len(v)
 
-    # em_jogo = list()
+    em_jogo = list()
 
     for i in range(n):
         valor = True
         if s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590: # Se eu chegar ao limite da tela, reinicio a posição do personagem
-            s[i], v[i] = s0, v1/norm*10+rndm*0.2
-        #     valor = False
-        # em_jogo.append(valor)
+            # s[i], v[i] = s0, v1/norm*10+rndm
+            valor = False
+        em_jogo.append(valor)
 
-
-    # try:
-    #     v = [v[i] for i in range(len(v)) if em_jogo[i]==True]
-    # except:
-    #     pass
-
+    if n>0:
+        v_novo = list()
+        cont = 0
+        for value in em_jogo:
+            if value:
+                v_novo.append(v[cont])
+            cont+=1
+        v = v_novo
+    n = len(v)
     # Controlar frame rate
     clock.tick(FPS)
 
@@ -84,9 +89,6 @@ while rodando:
 
     pygame.draw.circle(screen,"BLUE",corpo.get_pos(),15,0)
     pygame.draw.circle(screen,"RED",corpo2.get_pos(),15,0)
-  
-    mouse_click = False
-    n = len(v)
 
     # Update!
     pygame.display.update()
