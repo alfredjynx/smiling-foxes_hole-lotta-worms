@@ -1,10 +1,9 @@
 import pygame
 import numpy as np
 from classes.Header import Header
+
 pygame.init()
-
-
-
+pygame.font.init()
 
 # Tamanho da tela e definição do FPS
 screen = pygame.display.set_mode((800, 600))
