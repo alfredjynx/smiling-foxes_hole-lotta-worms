@@ -49,8 +49,7 @@ while rodando:
         v.append((v1/norm*10+rndm))
         s.append(s0)
         mouse_click = False
-    
-    n = len(v)
+        n = len(v)
 
     em_jogo = list()
 
@@ -63,13 +62,16 @@ while rodando:
 
     if n>0:
         v_novo = list()
+        s_novo = list()
         cont = 0
         for value in em_jogo:
             if value:
                 v_novo.append(v[cont])
+                s_novo.append(s[cont])
             cont+=1
         v = v_novo
-    n = len(v)
+        s = s_novo
+        n = len(v)
     # Controlar frame rate
     clock.tick(FPS)
 
