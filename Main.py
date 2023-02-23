@@ -30,7 +30,7 @@ s = list()
 
 # Inicializar fases
 fases = [
-    {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))},
+    {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":Ret((250,250),(50,50))},
     {"fase":2,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))},
     {"fase":3,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))}
 ]
@@ -42,7 +42,6 @@ personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
 f = 0
 
-
 rodando = True
 mouse_click = False
 while rodando:
@@ -52,6 +51,8 @@ while rodando:
     s = fases[f]['s']
     goal = fases[f]['goal']
     obst = fases[f]['obst']
+
+
 
     # Capturar eventos
     for event in pygame.event.get():
@@ -75,11 +76,15 @@ while rodando:
     em_jogo = list()
 
     for i in range(n):
-        valor = True
-        if s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590: # Se eu chegar ao limite da tela, reinicio a posição do personagem
-            # s[i], v[i] = s0, v1/norm*10+rndm
-            valor = False
-        em_jogo.append(valor)
+        if goal.collide(s[i]):
+            # rodando = False
+            f+=1
+        else:
+            valor = True
+            if (s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590) or obst.collide(s[i]): # Se eu chegar ao limite da tela, reinicio a posição do personagem
+                # s[i], v[i] = s0, v1/norm*10+rndm
+                valor = False
+            em_jogo.append(valor)
 
     if n>0:
         v_novo = list()
@@ -98,7 +103,7 @@ while rodando:
 
     # Processar posicoes
     for i in range(n):
-        v[i] = v[i] + corpo[0].calcula_a(s[i])*0 + corpo[1].calcula_a(s[i])*50
+        v[i] = v[i] + corpo[0].calcula_a(s[i])*10 + corpo[1].calcula_a(s[i])*50
         s[i] = s[i] + 0.1 * v[i]
 
 
