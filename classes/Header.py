@@ -11,10 +11,11 @@ class Header():
         self.quadrado_header = pygame.Rect((0,0), (self.width, self.height) )
 
         self.cor_slider = (0,0,0)
-        self.slider = pygame.Rect((37,37), (self.width/2-50, self.height/4) )
+        self.slider = pygame.Rect((37,50), (self.width/2-50, self.height/4) )
 
         self.cor_quantidade_slider = (18,10,255)
-        self.quantidade_slider = pygame.Rect((37,37), ((self.width/2-50)*0.3, self.height/4) )
+
+        self.quantidade_slider = pygame.Rect((37, 50), ((self.width/2-50)*0.3, self.height/4) )
 
         self.porcentagem_forca = 0.3
     
@@ -25,14 +26,24 @@ class Header():
         pygame.draw.rect(self.screen, self.cor_slider, self.slider)
         pygame.draw.rect(self.screen, self.cor_quantidade_slider, self.quantidade_slider)
 
+         # you have to call this at the start, 
+                   # if you want to use this module.
+        my_font = pygame.font.SysFont('arial', 30)
+        print(self.porcentagem_forca)
+        text_surface = my_font.render(f'Força {int(self.porcentagem_forca*100)}%', False, (0, 0, 0))
+
+        self.screen.blit(text_surface, (37,10))
+
    
 
     def atualiza_estado(self):
-        # see if the mouse is over the button
         
         mouse = pygame.mouse.get_pos()
         if self.slider.collidepoint(mouse):
             
-            self.quantidade_de_forca = (mouse[0] - 37)/ (self.width/2-50)
+            self.porcentagem_forca = (mouse[0] - 37)/ (self.width/2-50)
 
-            self.quantidade_slider = pygame.Rect((37,37), ((self.width/2-50)*self.quantidade_de_forca, self.height/4) )
+            self.quantidade_slider = pygame.Rect((37,50), ((self.width/2-50)*self.porcentagem_forca, self.height/4) )
+
+    def get_porcentagem_forca(self):
+        return self.porcentagem_forca
