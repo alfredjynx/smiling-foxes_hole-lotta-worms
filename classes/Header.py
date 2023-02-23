@@ -29,7 +29,7 @@ class Header():
          # you have to call this at the start, 
                    # if you want to use this module.
         my_font = pygame.font.SysFont('arial', 30)
-        print(self.porcentagem_forca)
+        # print(self.porcentagem_forca)
         text_surface = my_font.render(f'Força {int(self.porcentagem_forca*100)}%', False, (0, 0, 0))
 
         self.screen.blit(text_surface, (37,10))
