@@ -68,8 +68,6 @@ while rodando:
                 # print("mouse down")
                 header.atualiza_estado()
 
-    
-
     if mouse_click:
         v.append((v1/norm*10+rndm))
         s.append(s0)
@@ -111,7 +109,9 @@ while rodando:
 
 
     # Desenhar fundo
-    screen.fill(BLACK)
+    
+    screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
+
 
     # Desenhar personagem
     for i in range(n):
