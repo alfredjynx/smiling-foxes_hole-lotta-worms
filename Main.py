@@ -31,8 +31,8 @@ s = list()
 # Inicializar fases
 fases = [
     {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":Ret((250,250),(50,50))},
-    {"fase":2,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))},
-    {"fase":3,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))}
+    {"fase":2,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((550,450),(50,50)),"obst":Ret((250,250),(50,50))},
+    {"fase":3,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((500,250),(50,50)),"obst":Ret((250,250),(50,50))}
 ]
 
 n = len(v)
