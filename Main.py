@@ -1,6 +1,9 @@
 import pygame
 import numpy as np
 from classes.Planetas import Planeta
+from classes.Ret import Ret
+from classes.Header import Header
+
 
 pygame.init()
 
@@ -11,66 +14,100 @@ FPS = 60  # Frames per Second
 
 BLACK = (0, 0, 0, 0.2)
 COR_PERSONAGEM = (30, 200, 20)
-N = 0
+
+header = Header(screen)
+
 # Inicializar posicoes
-s0 = np.array([100,400])
+s0 = np.array([200,500])
 v0 = np.array([10, -10])
 # a = np.array([0, 0.2])
-v = [v0 for i in range(N)]
-s = [s0 for i in range(N)]
-c = 350
-pos1 = np.array([200,200])
-corpo = Planeta(pos1,c)
-pos2 = np.array([600,300])
-corpo2 = Planeta(pos2,c)
-# corpo = np.array([200,200])
-# v = v0
-# s = s0
-n = N
+v = list()
+s = list()
+# c = 350
+# pos1 = np.array([200,200])
+# corpo = Planeta(pos1,c)
+# pos2 = np.array([600,300])
+# corpo2 = Planeta(pos2,c)
+
+# Inicializar fases
+fases = [
+    {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":Ret((250,250),(50,50))},
+    {"fase":2,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))},
+    {"fase":3,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((50,50),(50,50)),"obst":Ret((250,250),(50,50))}
+]
+
+n = len(v)
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
+f = 0
+
 rodando = True
 mouse_click = False
 while rodando:
+
+    corpo = fases[f]['corpo']
+    v = fases[f]['v']
+    s = fases[f]['s']
+    goal = fases[f]['goal']
+    obst = fases[f]['obst']
+
+    mous_pos = pygame.mouse.get_pos()
+    rndm = np.array([1,1])
+    v1 = mous_pos-s0
+    norm = np.linalg.norm(v1)
+
     # Capturar eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rodando = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_click = True
+            if mous_pos[1]>100:
+                mouse_click = True
+            elif event.button == 1:
+                print("mouse down")
+                header.atualiza_estado()
 
-    mous_pos = pygame.mouse.get_pos()
-    rndm = np.random.randn(2)
-    v1 = mous_pos-s0
-    norm = np.linalg.norm(v1)
+    
 
     if mouse_click:
-        v.append((v1/norm*10+rndm*0.2))
+        v.append((v1/norm*10+rndm))
         s.append(s0)
+        mouse_click = False
+        n = len(v)
 
-    # em_jogo = list()
+    em_jogo = list()
 
     for i in range(n):
-        valor = True
-        if s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590: # Se eu chegar ao limite da tela, reinicio a posição do personagem
-            s[i], v[i] = s0, v1/norm*10+rndm*0.2
-        #     valor = False
-        # em_jogo.append(valor)
+        if goal.collide(s[i]):
+            # rodando = False
+            f+=1
+        else:
+            valor = True
+            if (s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590) or obst.collide(s[i]): # Se eu chegar ao limite da tela, reinicio a posição do personagem
+                # s[i], v[i] = s0, v1/norm*10+rndm
+                valor = False
+            em_jogo.append(valor)
 
-
-    # try:
-    #     v = [v[i] for i in range(len(v)) if em_jogo[i]==True]
-    # except:
-    #     pass
-
+    if n>0:
+        v_novo = list()
+        s_novo = list()
+        cont = 0
+        for value in em_jogo:
+            if value:
+                v_novo.append(v[cont])
+                s_novo.append(s[cont])
+            cont+=1
+        v = v_novo
+        s = s_novo
+        n = len(v)
     # Controlar frame rate
     clock.tick(FPS)
 
     # Processar posicoes
     for i in range(n):
-        v[i] = v[i] + corpo.calcula_a(s[i])*5 + corpo2.calcula_a(s[i])*10
+        v[i] = v[i] + corpo[0].calcula_a(s[i])*10 + corpo[1].calcula_a(s[i])*50
         s[i] = s[i] + 0.1 * v[i]
 
 
@@ -82,14 +119,17 @@ while rodando:
         rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
         screen.blit(personagem, rect)
 
-    pygame.draw.circle(screen,"BLUE",corpo.get_pos(),15,0)
-    pygame.draw.circle(screen,"RED",corpo2.get_pos(),15,0)
-  
-    mouse_click = False
-    n = len(v)
+    pygame.draw.circle(screen,"BLUE",corpo[0].get_pos(),15,0)
+    pygame.draw.circle(screen,"RED",corpo[1].get_pos(),15,0)
+    pygame.draw.rect(screen,"GREEN",goal.getRect())
+    pygame.draw.rect(screen,"WHITE",obst.getRect())
+    header.desenha()
 
     # Update!
     pygame.display.update()
+
+    fases[f]['v'] = v
+    fases[f]['s'] = s
 
 # Terminar tela
 pygame.quit()
