@@ -84,7 +84,7 @@ while rodando:
             f+=1
         else:
             valor = True
-            if (s[i][0]<10 or s[i][0]>790 or s[i][1]<10 or s[i][1]>590) or obst.collide(s[i]): # Se eu chegar ao limite da tela, reinicio a posição do personagem
+            if (s[i][0]<10 or s[i][0]>790 or s[i][1]<110 or s[i][1]>590) or obst.collide(s[i]): # Se eu chegar ao limite da tela, reinicio a posição do personagem
                 # s[i], v[i] = s0, v1/norm*10+rndm
                 valor = False
             em_jogo.append(valor)
