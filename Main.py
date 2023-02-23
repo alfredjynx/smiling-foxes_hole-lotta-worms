@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 from classes.Planetas import Planeta
 from classes.Ret import Ret
+from classes.Header import Header
 
 
 pygame.init()
@@ -14,7 +15,7 @@ FPS = 60  # Frames per Second
 BLACK = (0, 0, 0, 0.2)
 COR_PERSONAGEM = (30, 200, 20)
 
-
+header = Header(screen)
 
 # Inicializar posicoes
 s0 = np.array([200,500])
@@ -52,20 +53,23 @@ while rodando:
     goal = fases[f]['goal']
     obst = fases[f]['obst']
 
-
+    mous_pos = pygame.mouse.get_pos()
+    rndm = np.array([1,1])
+    v1 = mous_pos-s0
+    norm = np.linalg.norm(v1)
 
     # Capturar eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rodando = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_click = True
+            if mous_pos[1]>100:
+                mouse_click = True
+            elif event.button == 1:
+                print("mouse down")
+                header.atualiza_estado()
 
-    mous_pos = pygame.mouse.get_pos()
-    # rndm = np.random.randn(2)*0.2
-    rndm = np.array([1,1])
-    v1 = mous_pos-s0
-    norm = np.linalg.norm(v1)
+    
 
     if mouse_click:
         v.append((v1/norm*10+rndm))
@@ -119,6 +123,7 @@ while rodando:
     pygame.draw.circle(screen,"RED",corpo[1].get_pos(),15,0)
     pygame.draw.rect(screen,"GREEN",goal.getRect())
     pygame.draw.rect(screen,"WHITE",obst.getRect())
+    header.desenha()
 
     # Update!
     pygame.display.update()
