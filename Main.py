@@ -4,7 +4,6 @@ from classes.Planetas import Planeta
 from classes.Ret import Ret
 from classes.Header import Header
 
-
 pygame.init()
 
 # Tamanho da tela e definição do FPS
