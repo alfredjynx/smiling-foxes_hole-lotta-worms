@@ -7,7 +7,7 @@ class Planeta:
         self.__pos = pos
 
     def calcula_a(self,s):
-        C = 350
+        C = self.__forca
         y = self.__pos - s
         d = np.linalg.norm(y)
         direcao_a = y /d
@@ -21,3 +21,6 @@ class Planeta:
 
     def get_pos(self): return self.__pos
     def get_forca(self): return self.__forca
+
+    def set_forca(self,forca):
+        self.__forca = forca
