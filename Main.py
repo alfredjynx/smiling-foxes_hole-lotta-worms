@@ -66,7 +66,7 @@ while rodando:
             if mous_pos[1]>100:
                 mouse_click = True
             elif event.button == 1:
-                print("mouse down")
+                # print("mouse down")
                 header.atualiza_estado()
 
     
