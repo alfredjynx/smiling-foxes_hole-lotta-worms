@@ -12,7 +12,7 @@ FPS = 60  # Frames per Second
 BLACK = (0, 0, 0, 0.2)
 COR_PERSONAGEM = (30, 200, 20)
 # Inicializar posicoes
-s0 = np.array([100,400])
+s0 = np.array([200,500])
 v0 = np.array([10, -10])
 # a = np.array([0, 0.2])
 v = list()
@@ -41,7 +41,8 @@ while rodando:
             mouse_click = True
 
     mous_pos = pygame.mouse.get_pos()
-    rndm = np.random.randn(2)*0.2
+    # rndm = np.random.randn(2)*0.2
+    rndm = np.array([1,1])
     v1 = mous_pos-s0
     norm = np.linalg.norm(v1)
 
@@ -77,7 +78,7 @@ while rodando:
 
     # Processar posicoes
     for i in range(n):
-        v[i] = v[i] + corpo.calcula_a(s[i])*5 + corpo2.calcula_a(s[i])*10
+        v[i] = v[i] + corpo.calcula_a(s[i])*0 + corpo2.calcula_a(s[i])*50
         s[i] = s[i] + 0.1 * v[i]
 
 
