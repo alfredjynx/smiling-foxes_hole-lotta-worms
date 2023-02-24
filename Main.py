@@ -3,6 +3,7 @@ import numpy as np
 from classes.Planetas import Planeta
 from classes.Ret import Ret
 from classes.Header import Header
+import random
 
 # inicialização do Pygame
 pygame.init()
@@ -30,7 +31,7 @@ v = list()
 s = list()
 
 # Inicializar a fase básica
-fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":Ret((250,250),(50,50))}
+fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
 
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
@@ -79,19 +80,21 @@ pagina_atual = "inicio" # página atual do jogo, inicialmente é a página inici
 # se "rodando" for true, entrar no while
 while rodando:
 
-    # checa o número de bolinhas em jogo, também adiciona bolinhas a cada 10 níveis atingidos
-    if f!=0 and f%10==0 and reset:
-        b+=15
-        reset = False
-    else:
-        reset = True
-
     # inicialização de variáveis da fase
     corpo = fase['corpo']
     v = fase['v']
     s = fase['s']
     goal = fase['goal']
     obst = fase['obst']
+
+    # checa o número de bolinhas em jogo, também adiciona bolinhas a cada 10 níveis atingidos
+    if f!=0 and f%10==0 and reset:
+        b+=15
+        reset = False
+    elif f!=0 and f%5==0:
+        obst.append(Ret((random.randint(0,690),random.randint(150,500)),(50,50)))
+    else:
+        reset = True
 
     # básicos de algumas operações. Ex.: ver se o mouse está na tela principal ou no header, cria um vetor de aceleração mirando no mouse na hora do click
     mous_pos = pygame.mouse.get_pos()
@@ -140,14 +143,19 @@ while rodando:
             f+=1
             for i in range(len(corpo)):
                 corpo[i].randomized()
-            goal.randomized()
-            obst.randomized()
+            goal.random()
+            for i in range(len(obst)):
+                obst[i].random()
         # se não, checar se elas ainda estão na tela e não no header
         else:
             # valor inicializado como em jogo, e depois há uma checagem
             valor = True
-            if (s[i][0]<10 or s[i][0]>790 or s[i][1]<110 or s[i][1]>590) or obst.collide(s[i]): # Se eu chegar ao limite da tela, reinicio a posição do personagem
+            if (s[i][0]<10 or s[i][0]>790 or s[i][1]<110 or s[i][1]>590): # Se eu chegar ao limite da tela, reinicio a posição do personagem
                 valor = False
+            
+            for o in obst:
+                if o.collide(s[i]):
+                    valor = False
 
             # utilizado para fazer um update na lista de vetores e posições principal ("v" e "s" respectivamente)
             em_jogo.append(valor)
