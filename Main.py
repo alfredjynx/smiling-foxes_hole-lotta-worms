@@ -121,9 +121,31 @@ while rodando:
         screen.blit(personagem, rect)
 
     pygame.draw.circle(screen,"BLUE",corpo[0].get_pos(),15,0)
-    pygame.draw.circle(screen,"RED",corpo[1].get_pos(),15,0)
+    # pygame.draw.circle(screen,"RED", corpo[1].get_pos(),15,0)
+
+
+    # BLIT PLANETAS 
+    
+    planeta1 = pygame.image.load("./sprites/planeta1.png")
+    planeta2 = pygame.image.load("./sprites/planeta2.png")
+    lixo = pygame.image.load("./sprites/lixo.png")
+    
+    planeta1 = pygame.transform.scale(planeta1, (80, 80))
+    planeta2 = pygame.transform.scale(planeta2, (80, 80))
+    lixo = pygame.transform.scale(lixo, (150, 150))
+
+    screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
+    screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
+    screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
+
+
     pygame.draw.rect(screen,"GREEN",goal.getRect())
-    pygame.draw.rect(screen,"WHITE",obst.getRect())
+    
+
+
+
+
+
     header.desenha()
 
     # Update!
