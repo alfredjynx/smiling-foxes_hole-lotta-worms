@@ -6,6 +6,7 @@ class Planeta:
         self.__forca = forca
         self.__pos = pos
 
+    # calcula a força gravitacional (vetor)
     def calcula_a(self,s):
         C = self.__forca
         y = self.__pos - s
@@ -15,6 +16,7 @@ class Planeta:
         a = direcao_a * mag_a
         return a
     
+    # randomização de posição
     def randomized(self,x1,x2,y1,y2):
         self.__forca = random.randint(200,400)
         self.__pos = np.array([random.randint(x1,x2),random.randint(y1,y2)])

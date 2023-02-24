@@ -142,15 +142,20 @@ while rodando:
         if goal.collide(s[i]):
             f+=1
             b+=2
+            pont+=10*(1 + f/10)
             corpo.randomized(0,690,150,450)
+            # continua randomizando a posição até que o planeta esteja longe o suficiente do lançador
             while corpo.get_pos()[0]<150 and corpo.get_pos()[1]>400:
                 corpo.randomized(0,690,150,450)
+            
+            # continua randomizando a posição até que o alvo não colida com o lançador
             goal.random()
-            pont+=10*(1 + f/10)
             while goal.collide(s0):
                 goal.random()
+                
             for i in range(len(obst)):
                 obst[i].random()
+                # continua randomizando a posição até os obstáculos não colidirem com o lançador
                 while obst[i].collide(s0) or obst[i].getRect().colliderect(goal.getRect()):
                     obst[i].random()
             

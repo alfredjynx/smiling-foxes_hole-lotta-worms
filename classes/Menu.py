@@ -28,7 +28,7 @@ class Menu:
 
         screen.blit(background_image, (0, 0))
 
-        # Draw the title text
+        # Draw the title text (com pontuação se ela existir)
         if not init:
             title_text = self.title_font.render(f"Pontuação: {int(pont)}", True, (255, 255, 255))
             screen.blit(title_text, self.title_text_rect)
@@ -46,6 +46,7 @@ class Menu:
 
         pos = pygame.mouse.get_pos()
 
+        # highlight do botão onde o mouse está
         if self.atualiza_jogo(pos):
             pygame.draw.rect(screen,(173, 23, 85),self.start,3)
         elif self.atualiza_quit(pos):
