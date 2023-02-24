@@ -1,7 +1,7 @@
 import numpy
 import pygame
 
-class Menu:
+class Morte:
     def __init__(self) -> None:
         self.title_font = pygame.font.SysFont(None, 64)
         self.title_text = self.title_font.render("Smiling Foxes", True, (255, 255, 255))
@@ -24,17 +24,12 @@ class Menu:
         self.start.center = (800 // 2, 600 // 2)
         
 
-    def desenha(self,screen,background_image,init,pont):
+    def desenha(self,screen,background_image):
 
         screen.blit(background_image, (0, 0))
 
         # Draw the title text
-        if not init:
-            title_text = self.title_font.render(f"Pontuação: {int(pont)}", True, (255, 255, 255))
-            screen.blit(title_text, self.title_text_rect)
-        else:
-            screen.blit(self.title_text, self.title_text_rect)
-
+        screen.blit(self.title_text, self.title_text_rect)
         
         # Draw the play button
         pygame.draw.rect(screen, (0, 0, 0), (self.play_button_text_rect.left - 100, self.play_button_text_rect.top - 10, self.play_button_text_rect.width + 200, self.play_button_text_rect.height + 20))
@@ -57,4 +52,3 @@ class Menu:
 
     def atualiza_quit(self,pos):
         return self.quit.collidepoint(pos)
-    

@@ -65,6 +65,8 @@ rodando = True #básico: utilizado para entrar ou sair do gameloop
 mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
 pagina_atual = "inicio" # página atual do jogo, inicialmente é a página inicial
 pont = 0 # pontuação
+init = True # Vê se é a primeira vez que o Pygame é rodado
+p = True
 
 # se "rodando" for true, entrar no while
 while rodando:
@@ -77,10 +79,7 @@ while rodando:
     obst = fase['obst']
 
     # checa o número de bolinhas em jogo, também adiciona bolinhas a cada 10 níveis atingidos
-    if f!=0 and f%10==0 and reset:
-        b+=5
-        reset = False
-    elif f!=0 and f%5==0 and mais_obst:
+    if f!=0 and f%5==0 and mais_obst:
         obst.append(Ret((random.randint(0,690),random.randint(150,500)),(50,50)))
         mais_obst = False
     elif f%5!=0:
@@ -106,6 +105,8 @@ while rodando:
             if pagina_atual=="inicio":
                 if menu.atualiza_jogo(event.pos):
                     pagina_atual = "jogo"
+                    p = True
+                    init = False
                 elif menu.atualiza_quit(event.pos):
                     rodando = False
             
@@ -117,6 +118,9 @@ while rodando:
                 elif event.button == 1:
                     # print("mouse down")
                     header.atualiza_estado()
+
+    if not rodando:
+        break
 
     # se houve click na tela, adicionar uma bolinha na lista e retirar um dos valores das bolinhas disponíveis (apenas funciona se houver click e bolinhas disponíveis)
     if mouse_click and b>0:
@@ -139,6 +143,8 @@ while rodando:
             f+=1
             b+=2
             corpo.randomized(0,690,150,450)
+            while corpo.get_pos()[0]<150 and corpo.get_pos()[1]>400:
+                corpo.randomized(0,690,150,450)
             goal.random()
             pont+=10*(1 + f/10)
             while goal.collide(s0):
@@ -199,11 +205,11 @@ while rodando:
         # Desenhar fundo
         screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
 
-        header.desenha(pont,f)
+        header.desenha(pont,f,b)
 
         # Desenhar personagem
         for i in range(n):
-            rect = pygame.Rect(s[i], (10,10))  # First tuple is position, second is size.
+            rect = pygame.Rect(s[i]-np.array([3,3]), (10,10))  # First tuple is position, second is size.
             screen.blit(fox, rect)
 
         # BLIT PLANETAS 
@@ -225,7 +231,9 @@ while rodando:
         
 
     elif pagina_atual == "inicio":
-        menu.desenha(screen,background_image)
+        if p:
+            pont_pass = pont
+        menu.desenha(screen,background_image,init,pont_pass)
         
         # Update the screen
         pygame.display.flip()
@@ -242,6 +250,7 @@ while rodando:
         mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
         pagina_atual = "inicio"
         pont = 0 #pontuação
+        p = False
 
 
     # reinicialização das listas de vetores, para possibilitar a utilização em loops posteriores
