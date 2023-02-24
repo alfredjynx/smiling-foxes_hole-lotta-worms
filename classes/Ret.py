@@ -6,6 +6,7 @@ class Ret:
     def __init__(self,pos,tam):
         self.__pos = pos
         self.__rect = pygame.Rect(pos,tam)
+        self.__tam = tam
     
     def getPos(self):
         return self.__pos
@@ -25,8 +26,9 @@ class Ret:
     def collide(self,p):
         return self.__rect.collidepoint(p)
     
-    def randomized(self):
-        self.__pos = (random.randint(110,590),random.randint(200,700))
+    def random(self):
+        self.__pos = (random.randint(0,690),random.randint(150,500))
+        self.__rect = pygame.Rect(self.__pos,self.__tam)
 
 
     

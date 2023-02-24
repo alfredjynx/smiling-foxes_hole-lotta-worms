@@ -17,7 +17,7 @@ class Planeta:
     
     def randomized(self):
         self.__forca = random.randint(200,400)
-        self.__pos = np.array([random.randint(110,590),random.randint(200,700)])
+        self.__pos = np.array([random.randint(0,690),random.randint(150,500)])
 
     def get_pos(self): return self.__pos
     def get_forca(self): return self.__forca
