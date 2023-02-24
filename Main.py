@@ -13,7 +13,6 @@ clock = pygame.time.Clock()
 FPS = 60  # Frames per Second
 
 BLACK = (0, 0, 0, 0.2)
-COR_PERSONAGEM = (30, 200, 20)
 
 header = Header(screen)
 
@@ -38,9 +37,6 @@ fases = [
 
 n = len(v)
 # Personagem
-personagem = pygame.Surface((5, 5))  # Tamanho do personagem
-personagem.fill(COR_PERSONAGEM)  # Cor do personagem
-
 f = 0
 
 # coisas da pagina inicial:
@@ -63,6 +59,17 @@ quit_button_text_rect = quit_button_text.get_rect()
 quit_button_text_rect.center = (800 // 2, 600 // 1.5)
 
 background_image = pygame.image.load("./sprites/buraco.png")
+
+planeta1 = pygame.image.load("./sprites/planeta1.png")
+planeta2 = pygame.image.load("./sprites/planeta2.png")
+lixo = pygame.image.load("./sprites/lixo.png")
+
+planeta1 = pygame.transform.scale(planeta1, (80, 80))
+planeta2 = pygame.transform.scale(planeta2, (80, 80))
+lixo = pygame.transform.scale(lixo, (150, 150))
+
+fox = pygame.image.load("./sprites/fox.png")
+fox = pygame.transform.scale(fox, (50, 50))
 
 
 pagina_atual = "inicio"
@@ -145,23 +152,18 @@ while rodando:
 
         # Desenhar personagem
         for i in range(n):
-            rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
-            screen.blit(personagem, rect)
+            # Desenhar personagem. fox.png
+            screen.blit(fox, (s[i][0]-50 ,s[i][1] -50))            
+        
 
         pygame.draw.circle(screen,"BLUE",corpo[0].get_pos(),15,0)    
-        planeta1 = pygame.image.load("./sprites/planeta1.png")
-        planeta2 = pygame.image.load("./sprites/planeta2.png")
-        lixo = pygame.image.load("./sprites/lixo.png")
-        
-        planeta1 = pygame.transform.scale(planeta1, (80, 80))
-        planeta2 = pygame.transform.scale(planeta2, (80, 80))
-        lixo = pygame.transform.scale(lixo, (150, 150))
-
+    
         screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
         screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
         screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
-        pygame.draw.rect(screen,"GREEN",goal.getRect())
         header.desenha()
+
+        pygame.draw.rect(screen,"GREEN",goal.getRect())
         pygame.display.update()
         
     elif pagina_atual == "inicio":
