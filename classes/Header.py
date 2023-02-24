@@ -20,7 +20,7 @@ class Header():
         self.porcentagem_forca = 0.3
     
     
-    def desenha(self):
+    def desenha(self,pont,fase):
         
         pygame.draw.rect(self.screen, self.cor_fundo, self.quadrado_header)
         pygame.draw.rect(self.screen, self.cor_slider, self.slider)
@@ -30,8 +30,15 @@ class Header():
                    # if you want to use this module.
         my_font = pygame.font.SysFont('consolas', 30)
         text_surface = my_font.render(f'Força {int(self.porcentagem_forca*100)}%', False, (0, 0, 0))
-
         self.screen.blit(text_surface, (37,10))
+
+        my_font = pygame.font.SysFont('consolas', 20)
+        text_surface = my_font.render(f'Pontuação {int(pont)}', False, (0, 0, 0))
+        self.screen.blit(text_surface, (450,10))
+        text_surface = my_font.render(f'Fase {int(fase)}', False, (0, 0, 0))
+        self.screen.blit(text_surface, (450,50))
+
+        
 
    
 

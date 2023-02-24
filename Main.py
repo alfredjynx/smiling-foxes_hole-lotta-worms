@@ -208,7 +208,7 @@ while rodando:
         # Desenhar fundo
         screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
 
-        header.desenha()
+        header.desenha(pont,f)
 
         # Desenhar personagem
         for i in range(n):
