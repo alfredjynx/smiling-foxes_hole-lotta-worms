@@ -36,6 +36,36 @@ fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
+# fontes e botoes
+title_font = pygame.font.SysFont(None, 64)
+title_text = title_font.render("Smiling Foxes", True, (255, 255, 255))
+title_text_rect = title_text.get_rect()
+title_text_rect.center = (800 // 2, 600 // 3)
+
+play_button_font = pygame.font.SysFont(None, 32)
+play_button_text = play_button_font.render("Jogar", True, (255, 255, 255))
+play_button_text_rect = play_button_text.get_rect()
+play_button_text_rect.center = (800 // 2, 600 // 2)
+
+quit_button_font = pygame.font.SysFont(None, 32)
+quit_button_text = quit_button_font.render("Quit", True, (255, 255, 255))
+quit_button_text_rect = quit_button_text.get_rect()
+quit_button_text_rect.center = (800 // 2, 600 // 1.5)
+
+background_image = pygame.image.load("./sprites/buraco.png")
+
+planeta1 = pygame.image.load("./sprites/planeta1.png")
+planeta2 = pygame.image.load("./sprites/planeta2.png")
+lixo = pygame.image.load("./sprites/lixo.png")
+
+planeta1 = pygame.transform.scale(planeta1, (80, 80))
+planeta2 = pygame.transform.scale(planeta2, (80, 80))
+lixo = pygame.transform.scale(lixo, (150, 150))
+
+fox = pygame.image.load("./sprites/fox.png")
+fox = pygame.transform.scale(fox, (50, 50))
+
+
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela
 f = 0 #número da fase, incrementado a cada Goal atingido
@@ -44,7 +74,7 @@ reset = False #reset de bolinhas, um +15 no número de bolinhas
 check_n = False #após a utilização de todas as bolinhas, vê se ainda há bolinhas em jogo antes de interromper o pygame
 rodando = True #básico: utilizado para entrar ou sair do gameloop
 mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
-
+pagina_atual = "inicio" # página atual do jogo, inicialmente é a página inicial
 
 # se "rodando" for true, entrar no while
 while rodando:
@@ -76,8 +106,13 @@ while rodando:
             rodando = False
         # se houver click
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            
+            # se o click for no botão de inicio, mudar a página atual para "jogo"
+            if play_button_text_rect.collidepoint(event.pos):
+                pagina_atual = "jogo"
+
             # se não for no Header, registrar o click
-            if mous_pos[1]>100:
+            if mous_pos[1]>100 and pagina_atual == "jogo":
                 mouse_click = True
             # se for no header, atualizar o estado do slider de força
             elif event.button == 1:
@@ -149,37 +184,49 @@ while rodando:
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
-    # Desenhar fundo
-    screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
 
 
-    # Desenhar personagem/bolinhas
-    for i in range(n):
-        rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
-        screen.blit(personagem, rect)
 
+    if pagina_atual == "jogo":
+        
+        # Desenhar fundo
+        screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
 
-    # BLIT PLANETAS 
-    
-    planeta1 = pygame.image.load("./sprites/planeta1.png")
-    planeta2 = pygame.image.load("./sprites/planeta2.png")
-    lixo = pygame.image.load("./sprites/lixo.png")
-    planeta1 = pygame.transform.scale(planeta1, (80, 80))
-    planeta2 = pygame.transform.scale(planeta2, (80, 80))
-    lixo = pygame.transform.scale(lixo, (150, 150))
-    screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
-    screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
-    screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
+        # Desenhar personagem
+        for i in range(n):
+            screen.blit(fox, (s[i][0]-50 ,s[i][1] -50))            
+        
+        # Desenhar obstáculo
+        screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
+        screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
+        screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
+        
+        # Desenhar header
+        header.desenha()
 
-    # desenho do objetivo
-    pygame.draw.rect(screen,"GREEN",goal.getRect())
-    
+        # Desenhar goal
+        pygame.draw.rect(screen,"GREEN",goal.getRect())
+        pygame.display.update()
+        
+    elif pagina_atual == "inicio":
+        screen.blit(background_image, (0, 0))
 
-    # desenho do Header 
-    header.desenha()
+        # Draw the title text
+        screen.blit(title_text, title_text_rect)
+        
+        # Draw the play button
+        pygame.draw.rect(screen, (0, 0, 0), (play_button_text_rect.left - 100, play_button_text_rect.top - 10, play_button_text_rect.width + 200, play_button_text_rect.height + 20))
+        screen.blit(play_button_text, play_button_text_rect)
+        
+        # Draw the quit button
+        pygame.draw.rect(screen, (0, 0, 50), (quit_button_text_rect.left - 100, quit_button_text_rect.top - 10, quit_button_text_rect.width + 200, quit_button_text_rect.height + 20))
+        screen.blit(quit_button_text, quit_button_text_rect)
+        
+        # Update the screen
+        pygame.display.flip()
 
     # Update!
-    pygame.display.update()
+    
 
     # reinicialização das listas de vetores, para possibilitar a utilização em loops posteriores
     fase['v'] = v
