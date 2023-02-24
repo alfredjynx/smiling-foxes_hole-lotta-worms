@@ -57,28 +57,27 @@ quit_button_text_rect.center = (800 // 2, 600 // 1.5)
 
 background_image = pygame.image.load("./sprites/buraco.png")
 
-planeta1 = pygame.image.load("./sprites/planeta1.png")
-planeta2 = pygame.image.load("./sprites/planeta2.png")
+planeta = pygame.image.load("./sprites/planeta1.png")
 lixo = pygame.image.load("./sprites/lixo.png")
 
-planeta1 = pygame.transform.scale(planeta1, (80, 80))
-planeta2 = pygame.transform.scale(planeta2, (80, 80))
-lixo = pygame.transform.scale(lixo, (150, 150))
+planeta = pygame.transform.scale(planeta, (80, 80))
+lixo = pygame.transform.scale(lixo, (40, 40))
 
 fox = pygame.image.load("./sprites/fox.png")
-fox = pygame.transform.scale(fox, (50, 50))
+fox = pygame.transform.scale(fox, (10, 10))
 
 
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela
 f = 0 #número da fase, incrementado a cada Goal atingido
 b = 15 #número de bolinhas restantes (possíveis de serem "atiradas")
-reset = False #reset de bolinhas, um +15 no número de bolinhas
+reset = False #reset de bolinhas, um +5 no número de bolinhas
 mais_obst = False #checa se está na hora de adicionar mais um obstáculo
 check_n = False #após a utilização de todas as bolinhas, vê se ainda há bolinhas em jogo antes de interromper o pygame
 rodando = True #básico: utilizado para entrar ou sair do gameloop
 mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
 pagina_atual = "inicio" # página atual do jogo, inicialmente é a página inicial
+pont = 0 # pontuação
 
 # se "rodando" for true, entrar no while
 while rodando:
@@ -92,7 +91,7 @@ while rodando:
 
     # checa o número de bolinhas em jogo, também adiciona bolinhas a cada 10 níveis atingidos
     if f!=0 and f%10==0 and reset:
-        b+=15
+        b+=5
         reset = False
     elif f!=0 and f%5==0 and mais_obst:
         obst.append(Ret((random.randint(0,690),random.randint(150,500)),(50,50)))
@@ -144,17 +143,20 @@ while rodando:
 
     # checar todas as bolinhas que estão na tela
     for i in range(n):
-        # se você atingir o objetivo (Goal), randomizar o nível e adicionar um valor na variável de "número de fase" (f)
+        # se você atingir o objetivo (Goal), randomizar o nível e adicionar um valor na variável de "número de fase" (f), assim como +2 blinhas adicionadas no "pente" da arma
         if goal.collide(s[i]):
             f+=1
+            b+=2
             corpo.randomized(0,690,150,450)
             goal.random()
+            pont+=10*(1 + f/10)
             while goal.collide(s0):
                 goal.random()
             for i in range(len(obst)):
                 obst[i].random()
-                while obst[i].collide(s0):
+                while obst[i].collide(s0) or obst[i].getRect().colliderect(goal.getRect()):
                     obst[i].random()
+            
         # se não, checar se elas ainda estão na tela e não no header
         else:
             # valor inicializado como em jogo, e depois há uma checagem
@@ -197,7 +199,7 @@ while rodando:
 
     # Processar posicoes
     for i in range(n):
-        v[i] = v[i] + corpo.calcula_a(s[i])*30 
+        v[i] = v[i] + corpo.calcula_a(s[i])*50 
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
@@ -210,19 +212,21 @@ while rodando:
 
         # Desenhar personagem
         for i in range(n):
-            rect = pygame.Rect(s[i]-np.array([10,10]), (10, 10))  # First tuple is position, second is size.
+            rect = pygame.Rect(s[i], (10,10))  # First tuple is position, second is size.
             screen.blit(fox, rect)
 
         # BLIT PLANETAS 
-        planeta1 = pygame.image.load("./sprites/planeta1.png")
+        planeta = pygame.image.load("./sprites/planeta1.png")
         lixo = pygame.image.load("./sprites/lixo.png")
-        planeta1 = pygame.transform.scale(planeta1, (80, 80))
+        planeta = pygame.transform.scale(planeta, (80, 80))
         lixo = pygame.transform.scale(lixo, (150, 150))
-        screen.blit(planeta1, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
+        screen.blit(planeta, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
+
         for i in range(len(obst)):
             screen.blit(lixo, (obst[i].getRect()[0]-50 ,obst[i].getRect()[1] -50))
 
         # Desenhar goal
+        pygame.draw.circle(screen,"WHITE",s0,5)
         pygame.draw.rect(screen,"GREEN",goal.getRect())
         pygame.display.update()
         
@@ -255,6 +259,7 @@ while rodando:
         rodando = True #básico: utilizado para entrar ou sair do gameloop
         mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
         pagina_atual = "inicio"
+        pont = 0 #pontuação
 
     # Update!
     
