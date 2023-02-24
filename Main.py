@@ -107,8 +107,10 @@ while rodando:
 
     for i in range(n):
         if goal.collide(s[i]):
-            # rodando = False
-            f+=1
+            if f<(len(fases)-1):
+                f+=1
+            else:
+                rodando = False
         else:
             valor = True
             if (s[i][0]<10 or s[i][0]>790 or s[i][1]<110 or s[i][1]>590) or obst.collide(s[i]): # Se eu chegar ao limite da tela, reinicio a posição do personagem
@@ -134,7 +136,7 @@ while rodando:
     # Processar posicoes
     for i in range(n):
         v[i] = v[i] + corpo[0].calcula_a(s[i])*10 + corpo[1].calcula_a(s[i])*50
-        s[i] = s[i] + 0.1 * v[i]
+        s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
     if pagina_atual == "jogo":
