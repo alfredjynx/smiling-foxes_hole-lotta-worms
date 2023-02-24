@@ -1,4 +1,3 @@
-import os
 import pygame
 import numpy as np
 from classes.Planetas import Planeta
@@ -15,6 +14,8 @@ FPS = 60  # Frames per Second
 
 # cor do fundo básico
 BLACK = (0, 0, 0, 0.2)
+
+# cor do "personagem" (bolinha)
 COR_PERSONAGEM = (30, 200, 20)
 
 # classe header, responsável pelo cabeçalho do jogo (com o slider de força)
@@ -35,7 +36,15 @@ fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
-f = 0
+# Inicialização das variáveis utilizadas nas verificações do código
+n = len(v) #número de bolinhas na tela
+f = 0 #número da fase, incrementado a cada Goal atingido
+b = 10 #número de bolinhas restantes (possíveis de serem "atiradas")
+reset = False #reset de bolinhas, um +15 no número de bolinhas
+check_n = False #após a utilização de todas as bolinhas, vê se ainda há bolinhas em jogo antes de interromper o pygame
+rodando = True #básico: utilizado para entrar ou sair do gameloop
+mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
+
 
 # se "rodando" for true, entrar no while
 while rodando:
@@ -65,7 +74,9 @@ while rodando:
         # quando quiser fechar a janela, dá pra fechar
         if event.type == pygame.QUIT:
             rodando = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        # se houver click
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # se não for no Header, registrar o click
             if mous_pos[1]>100:
                 mouse_click = True
             # se for no header, atualizar o estado do slider de força
@@ -139,17 +150,13 @@ while rodando:
 
 
     # Desenhar fundo
-    
     screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
 
 
-    # Desenhar personagem
+    # Desenhar personagem/bolinhas
     for i in range(n):
         rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
         screen.blit(personagem, rect)
-
-    pygame.draw.circle(screen,"BLUE",corpo[0].get_pos(),15,0)
-    # pygame.draw.circle(screen,"RED", corpo[1].get_pos(),15,0)
 
 
     # BLIT PLANETAS 
@@ -157,26 +164,22 @@ while rodando:
     planeta1 = pygame.image.load("./sprites/planeta1.png")
     planeta2 = pygame.image.load("./sprites/planeta2.png")
     lixo = pygame.image.load("./sprites/lixo.png")
-    
     planeta1 = pygame.transform.scale(planeta1, (80, 80))
     planeta2 = pygame.transform.scale(planeta2, (80, 80))
     lixo = pygame.transform.scale(lixo, (150, 150))
-
     screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
     screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
     screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
 
-
+    # desenho do objetivo
     pygame.draw.rect(screen,"GREEN",goal.getRect())
     
 
-
-
-
-
+    # desenho do Header 
     header.desenha()
 
     # Update!
+    pygame.display.update()
 
     # reinicialização das listas de vetores, para possibilitar a utilização em loops posteriores
     fase['v'] = v
