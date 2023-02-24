@@ -27,7 +27,7 @@ class Ret:
         return self.__rect.collidepoint(p)
     
     def random(self):
-        self.__pos = (random.randint(0,690),random.randint(150,500))
+        self.__pos = (random.randint(150,690),random.randint(150,590))
         self.__rect = pygame.Rect(self.__pos,self.__tam)
 
 

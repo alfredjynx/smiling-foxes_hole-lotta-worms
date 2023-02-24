@@ -31,7 +31,12 @@ v = list()
 s = list()
 
 # Inicializar a fase básica
-fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
+
+# fase comentada: fase com dois planetas
+# fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
+
+fase = {"fase":1,'corpo':Planeta(np.array([200,200]),350),"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
+
 
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
@@ -40,8 +45,9 @@ personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela
 f = 0 #número da fase, incrementado a cada Goal atingido
-b = 10 #número de bolinhas restantes (possíveis de serem "atiradas")
+b = 15 #número de bolinhas restantes (possíveis de serem "atiradas")
 reset = False #reset de bolinhas, um +15 no número de bolinhas
+mais_obst = False #checa se está na hora de adicionar mais um obstáculo
 check_n = False #após a utilização de todas as bolinhas, vê se ainda há bolinhas em jogo antes de interromper o pygame
 rodando = True #básico: utilizado para entrar ou sair do gameloop
 mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
@@ -61,8 +67,11 @@ while rodando:
     if f!=0 and f%10==0 and reset:
         b+=15
         reset = False
-    elif f!=0 and f%5==0:
+    elif f!=0 and f%5==0 and mais_obst:
         obst.append(Ret((random.randint(0,690),random.randint(150,500)),(50,50)))
+        mais_obst = False
+    elif f%5!=0:
+        mais_obst = True
     else:
         reset = True
 
@@ -106,11 +115,16 @@ while rodando:
         # se você atingir o objetivo (Goal), randomizar o nível e adicionar um valor na variável de "número de fase" (f)
         if goal.collide(s[i]):
             f+=1
-            for i in range(len(corpo)):
-                corpo[i].randomized()
+            # for i in range(len(corpo)):
+            #     corpo[i].randomized(0,690,150,450)
+            corpo.randomized(0,690,150,450)
             goal.random()
+            while goal.collide(s0):
+                goal.random()
             for i in range(len(obst)):
                 obst[i].random()
+                while obst[i].collide(s0):
+                    obst[i].random()
         # se não, checar se elas ainda estão na tela e não no header
         else:
             # valor inicializado como em jogo, e depois há uma checagem
@@ -153,7 +167,9 @@ while rodando:
 
     # Processar posicoes
     for i in range(n):
-        v[i] = v[i] + corpo[0].calcula_a(s[i])*10 + corpo[1].calcula_a(s[i])*50
+        # v[i] = v[i] + corpo[0].calcula_a(s[i])*30 + corpo[1].calcula_a(s[i])*50
+        # v[i] = v[i] + corpo[0].calcula_a(s[i])*30 
+        v[i] = v[i] + corpo.calcula_a(s[i])*30 
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
@@ -170,13 +186,14 @@ while rodando:
     # BLIT PLANETAS 
     
     planeta1 = pygame.image.load("./sprites/planeta1.png")
-    planeta2 = pygame.image.load("./sprites/planeta2.png")
+    # planeta2 = pygame.image.load("./sprites/planeta2.png")
     lixo = pygame.image.load("./sprites/lixo.png")
     planeta1 = pygame.transform.scale(planeta1, (80, 80))
-    planeta2 = pygame.transform.scale(planeta2, (80, 80))
+    # planeta2 = pygame.transform.scale(planeta2, (80, 80))
     lixo = pygame.transform.scale(lixo, (150, 150))
-    screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
-    screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
+    screen.blit(planeta1, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
+    # screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
+    # screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
     for i in range(len(obst)):
         screen.blit(lixo, (obst[i].getRect()[0]-50 ,obst[i].getRect()[1] -50))
 
