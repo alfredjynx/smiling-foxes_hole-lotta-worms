@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class Ret:
 
@@ -23,6 +24,9 @@ class Ret:
 
     def collide(self,p):
         return self.__rect.collidepoint(p)
+    
+    def randomized(self):
+        self.__pos = (random.randint(110,590),random.randint(200,700))
 
 
     
