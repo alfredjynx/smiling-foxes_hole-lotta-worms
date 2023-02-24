@@ -33,10 +33,7 @@ s = list()
 # Inicializar a fase básica
 
 # fase comentada: fase com dois planetas
-# fase = {"fase":1,'corpo':[Planeta(np.array([200,200]),350),Planeta(np.array([600,300]),350)],"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
-
 fase = {"fase":1,'corpo':Planeta(np.array([200,200]),350),"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
-
 
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
@@ -150,8 +147,6 @@ while rodando:
         # se você atingir o objetivo (Goal), randomizar o nível e adicionar um valor na variável de "número de fase" (f)
         if goal.collide(s[i]):
             f+=1
-            # for i in range(len(corpo)):
-            #     corpo[i].randomized(0,690,150,450)
             corpo.randomized(0,690,150,450)
             goal.random()
             while goal.collide(s0):
@@ -202,13 +197,8 @@ while rodando:
 
     # Processar posicoes
     for i in range(n):
-        # v[i] = v[i] + corpo[0].calcula_a(s[i])*30 + corpo[1].calcula_a(s[i])*50
-        # v[i] = v[i] + corpo[0].calcula_a(s[i])*30 
         v[i] = v[i] + corpo.calcula_a(s[i])*30 
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
-
-
-
 
 
     if pagina_atual == "jogo":
@@ -216,24 +206,27 @@ while rodando:
         # Desenhar fundo
         screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
 
-    # BLIT PLANETAS 
-    
-    planeta1 = pygame.image.load("./sprites/planeta1.png")
-    # planeta2 = pygame.image.load("./sprites/planeta2.png")
-    lixo = pygame.image.load("./sprites/lixo.png")
-    planeta1 = pygame.transform.scale(planeta1, (80, 80))
-    # planeta2 = pygame.transform.scale(planeta2, (80, 80))
-    lixo = pygame.transform.scale(lixo, (150, 150))
-    screen.blit(planeta1, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
-    # screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
-    # screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
-    for i in range(len(obst)):
-        screen.blit(lixo, (obst[i].getRect()[0]-50 ,obst[i].getRect()[1] -50))
+        header.desenha()
+
+        # Desenhar personagem
+        for i in range(n):
+            rect = pygame.Rect(s[i]-np.array([50,50]), (10, 10))  # First tuple is position, second is size.
+            screen.blit(fox, rect)
+
+        # BLIT PLANETAS 
+        planeta1 = pygame.image.load("./sprites/planeta1.png")
+        lixo = pygame.image.load("./sprites/lixo.png")
+        planeta1 = pygame.transform.scale(planeta1, (80, 80))
+        lixo = pygame.transform.scale(lixo, (150, 150))
+        screen.blit(planeta1, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
+        for i in range(len(obst)):
+            screen.blit(lixo, (obst[i].getRect()[0]-50 ,obst[i].getRect()[1] -50))
 
         # Desenhar goal
         pygame.draw.rect(screen,"GREEN",goal.getRect())
         pygame.display.update()
         
+
     elif pagina_atual == "inicio":
         screen.blit(background_image, (0, 0))
 
