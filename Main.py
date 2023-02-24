@@ -1,3 +1,4 @@
+import os
 import pygame
 import numpy as np
 from classes.Planetas import Planeta
@@ -42,6 +43,30 @@ personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
 f = 0
 
+# coisas da pagina inicial:
+# Set up the title text
+title_font = pygame.font.SysFont(None, 64)
+title_text = title_font.render("Smiling Foxes", True, (255, 255, 255))
+title_text_rect = title_text.get_rect()
+title_text_rect.center = (800 // 2, 600 // 3)
+
+# Set up the play button
+play_button_font = pygame.font.SysFont(None, 32)
+play_button_text = play_button_font.render("Jogar", True, (255, 255, 255))
+play_button_text_rect = play_button_text.get_rect()
+play_button_text_rect.center = (800 // 2, 600 // 2)
+
+# Set up the quit button
+quit_button_font = pygame.font.SysFont(None, 32)
+quit_button_text = quit_button_font.render("Quit", True, (255, 255, 255))
+quit_button_text_rect = quit_button_text.get_rect()
+quit_button_text_rect.center = (800 // 2, 600 // 1.5)
+
+background_image = pygame.image.load("./sprites/buraco.png")
+
+
+pagina_atual = "inicio"
+
 rodando = True
 mouse_click = False
 while rodando:
@@ -62,7 +87,11 @@ while rodando:
         if event.type == pygame.QUIT:
             rodando = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if mous_pos[1]>100:
+
+            if play_button_text_rect.collidepoint(event.pos):
+                pagina_atual = "jogo"
+
+            elif mous_pos[1]>100 and pagina_atual == "jogo":
                 mouse_click = True
             elif event.button == 1:
                 # print("mouse down")
@@ -108,46 +137,52 @@ while rodando:
         s[i] = s[i] + 0.1 * v[i]
 
 
+    if pagina_atual == "jogo":
+    
+        screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
+
+        # Desenhar personagem
+        for i in range(n):
+            rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
+            screen.blit(personagem, rect)
+
+        pygame.draw.circle(screen,"BLUE",corpo[0].get_pos(),15,0)    
+        planeta1 = pygame.image.load("./sprites/planeta1.png")
+        planeta2 = pygame.image.load("./sprites/planeta2.png")
+        lixo = pygame.image.load("./sprites/lixo.png")
+        
+        planeta1 = pygame.transform.scale(planeta1, (80, 80))
+        planeta2 = pygame.transform.scale(planeta2, (80, 80))
+        lixo = pygame.transform.scale(lixo, (150, 150))
+
+        screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
+        screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
+        screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
+        pygame.draw.rect(screen,"GREEN",goal.getRect())
+        header.desenha()
+        pygame.display.update()
+        
+    elif pagina_atual == "inicio":
+        screen.blit(background_image, (0, 0))
+    
+        # Draw the title text
+        screen.blit(title_text, title_text_rect)
+        
+        # Draw the play button
+        pygame.draw.rect(screen, (0, 0, 0), (play_button_text_rect.left - 100, play_button_text_rect.top - 10, play_button_text_rect.width + 200, play_button_text_rect.height + 20))
+        screen.blit(play_button_text, play_button_text_rect)
+        
+        # Draw the quit button
+        pygame.draw.rect(screen, (0, 0, 50), (quit_button_text_rect.left - 100, quit_button_text_rect.top - 10, quit_button_text_rect.width + 200, quit_button_text_rect.height + 20))
+        screen.blit(quit_button_text, quit_button_text_rect)
+        
+        # Update the screen
+        pygame.display.flip()
+
+
     # Desenhar fundo
-    
-    screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
-
-
-    # Desenhar personagem
-    for i in range(n):
-        rect = pygame.Rect(s[i], (10, 10))  # First tuple is position, second is size.
-        screen.blit(personagem, rect)
-
-    pygame.draw.circle(screen,"BLUE",corpo[0].get_pos(),15,0)
-    # pygame.draw.circle(screen,"RED", corpo[1].get_pos(),15,0)
-
-
-    # BLIT PLANETAS 
-    
-    planeta1 = pygame.image.load("./sprites/planeta1.png")
-    planeta2 = pygame.image.load("./sprites/planeta2.png")
-    lixo = pygame.image.load("./sprites/lixo.png")
-    
-    planeta1 = pygame.transform.scale(planeta1, (80, 80))
-    planeta2 = pygame.transform.scale(planeta2, (80, 80))
-    lixo = pygame.transform.scale(lixo, (150, 150))
-
-    screen.blit(planeta1, (corpo[0].get_pos()[0]-25 ,corpo[0].get_pos()[1] -25))
-    screen.blit(planeta2, (corpo[1].get_pos()[0]-25,corpo[1].get_pos()[1]-25))
-    screen.blit(lixo, (obst.getRect()[0]-50 ,obst.getRect()[1] -50))
-
-
-    pygame.draw.rect(screen,"GREEN",goal.getRect())
-    
-
-
-
-
-
-    header.desenha()
 
     # Update!
-    pygame.display.update()
 
     fases[f]['v'] = v
     fases[f]['s'] = s
