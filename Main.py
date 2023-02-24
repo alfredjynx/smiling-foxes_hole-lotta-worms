@@ -192,7 +192,7 @@ while rodando:
 
     # checar o número de bolinhas em jogo se b=0, parar o jogo se todas forem eliminadas
     if check_n and n<=0:
-        rodando=False
+        pagina_atual = "inicio"
 
 
     # Processar posicoes
@@ -210,7 +210,7 @@ while rodando:
 
         # Desenhar personagem
         for i in range(n):
-            rect = pygame.Rect(s[i]-np.array([50,50]), (10, 10))  # First tuple is position, second is size.
+            rect = pygame.Rect(s[i]-np.array([10,10]), (10, 10))  # First tuple is position, second is size.
             screen.blit(fox, rect)
 
         # BLIT PLANETAS 
@@ -243,6 +243,18 @@ while rodando:
         
         # Update the screen
         pygame.display.flip()
+
+        # Reset de variáveis
+        fase = {"fase":1,'corpo':Planeta(np.array([200,200]),350),"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
+        n = len(v) #número de bolinhas na tela
+        f = 0 #número da fase, incrementado a cada Goal atingido
+        b = 15 #número de bolinhas restantes (possíveis de serem "atiradas")
+        reset = False #reset de bolinhas, um +15 no número de bolinhas
+        mais_obst = False #checa se está na hora de adicionar mais um obstáculo
+        check_n = False #após a utilização de todas as bolinhas, vê se ainda há bolinhas em jogo antes de interromper o pygame
+        rodando = True #básico: utilizado para entrar ou sair do gameloop
+        mouse_click = False #vê se houve click do mouse, muda para true caso há uma click do mouse
+        pagina_atual = "inicio"
 
     # Update!
     
