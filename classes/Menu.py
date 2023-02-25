@@ -22,6 +22,8 @@ class Menu:
         self.quit.center = (800 // 2, 600 // 1.5)
         self.start = pygame.Rect((0,0),(260,45))
         self.start.center = (800 // 2, 600 // 2)
+
+        self.dicas = ['Mudar a velocidade afeta todos os projéteis da tela, não só os que serão disparados','As lixerias nem sempre ']
         
 
     def desenha(self,screen,background_image,init,pont):
@@ -31,7 +33,12 @@ class Menu:
         # Draw the title text (com pontuação se ela existir)
         if not init:
             title_text = self.title_font.render(f"Pontuação: {int(pont)}", True, (255, 255, 255))
-            screen.blit(title_text, self.title_text_rect)
+            rect = title_text.get_rect()
+            rect.center = (800 // 2, 600 // 3)
+            screen.blit(title_text, rect)
+
+
+
         else:
             screen.blit(self.title_text, self.title_text_rect)
 

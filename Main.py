@@ -44,11 +44,12 @@ menu = Menu()
 
 background_image = pygame.image.load("./sprites/buraco.png")
 
-planeta = pygame.image.load("./sprites/planeta1.png")
-lixo = pygame.image.load("./sprites/lixo.png")
+planeta = pygame.image.load("./sprites/planet_pixel.png")
+# lixo = pygame.image.load("./sprites/lixo.png")
+lixo = pygame.image.load("./sprites/garbage-removebg.png")
 
 planeta = pygame.transform.scale(planeta, (80, 80))
-lixo = pygame.transform.scale(lixo, (40, 40))
+lixo = pygame.transform.scale(lixo, (10, 10))
 
 fox = pygame.image.load("./sprites/fox.png")
 fox = pygame.transform.scale(fox, (10, 10))
@@ -118,6 +119,8 @@ while rodando:
                 elif event.button == 1:
                     # print("mouse down")
                     header.atualiza_estado()
+                    if header.atualiza_quit(mous_pos):
+                        pagina_atual = "inicio"
 
     if not rodando:
         break
@@ -152,7 +155,7 @@ while rodando:
             goal.random()
             while goal.collide(s0):
                 goal.random()
-                
+
             for i in range(len(obst)):
                 obst[i].random()
                 # continua randomizando a posição até os obstáculos não colidirem com o lançador
@@ -208,7 +211,11 @@ while rodando:
     if pagina_atual == "jogo":
         
         # Desenhar fundo
-        screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
+        # screen.blit(pygame.image.load("./sprites/fundo2.png"), (0,0))
+
+        # link do fundo, feito pelo artista Norma2D: https://twitter.com/norma_2d/status/1374371658920722441
+        screen.blit(pygame.transform.scale(pygame.image.load("./sprites/fundo_pixel.png"),(1000,600)), (0,0))
+
 
         header.desenha(pont,f,b)
 
@@ -218,14 +225,15 @@ while rodando:
             screen.blit(fox, rect)
 
         # BLIT PLANETAS 
-        planeta = pygame.image.load("./sprites/planeta1.png")
-        lixo = pygame.image.load("./sprites/lixo.png")
-        planeta = pygame.transform.scale(planeta, (80, 80))
-        lixo = pygame.transform.scale(lixo, (150, 150))
+        # planeta = pygame.image.load("./sprites/planeta1.png")
+        planeta = pygame.Surface((100,100))
+        planeta = pygame.transform.scale(planeta,(50,50))
+
+        lixo = pygame.transform.scale(lixo, (80, 80))
         screen.blit(planeta, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
 
         for i in range(len(obst)):
-            screen.blit(lixo, (obst[i].getRect()[0]-50 ,obst[i].getRect()[1] -50))
+            screen.blit(lixo, (obst[i].getRect()[0],obst[i].getRect()[1]))
 
         # Desenhar goal
         pygame.draw.circle(screen,"WHITE",s0,5)
