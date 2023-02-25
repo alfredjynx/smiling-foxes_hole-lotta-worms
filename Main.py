@@ -46,7 +46,12 @@ background_image = pygame.image.load("./sprites/buraco.png")
 
 planeta = pygame.image.load("./sprites/planet_pixel.png")
 # lixo = pygame.image.load("./sprites/lixo.png")
+
+# Origem da imagem do lixo: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-nhvgc&psig=AOvVaw2SIPcnyBhCR9_JSLz4dZF3&ust=1677415653254000&source=images&cd=vfe&ved=0CBAQjhxqFwoTCOjoxK_asP0CFQAAAAAdAAAAABAE
 lixo = pygame.image.load("./sprites/garbage-removebg.png")
+
+# Origem da iamgem do lixo: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-nhvgc&psig=AOvVaw3mx7-cZVaF9vqfaWQ86gd5&ust=1677417200573000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCPjx_5HgsP0CFQAAAAAdAAAAABAK
+# lixo = pygame.image.load("./sprites/lixo.png")
 
 planeta = pygame.transform.scale(planeta, (80, 80))
 lixo = pygame.transform.scale(lixo, (10, 10))
