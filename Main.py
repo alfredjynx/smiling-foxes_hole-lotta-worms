@@ -68,6 +68,9 @@ som_explosao = pygame.mixer.Sound("./sons/explosao.mp3")
 som_click = pygame.mixer.Sound("./sons/click.mp3")
 som_click.set_volume(0.5)
 
+musica = pygame.mixer.Sound("./sons/musica.mp3")
+tocando = False
+
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela
 f = 0 #número da fase, incrementado a cada Goal atingido
@@ -118,6 +121,8 @@ while rodando:
             
             # se o click for no botão de inicio, mudar a página atual para "jogo"
             if pagina_atual=="inicio":
+                
+
                 if menu.atualiza_jogo(event.pos):
                     som_click.play()
                     pagina_atual = "jogo"
@@ -231,6 +236,14 @@ while rodando:
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
+    if pagina_atual == "inicio" and not tocando:
+        musica.play()
+        tocando = True
+
+    if pagina_atual == "jogo":
+        musica.stop()
+        tocando = False
+
     if pagina_atual == "jogo":
         
         # Desenhar fundo
@@ -267,6 +280,8 @@ while rodando:
         
 
     elif pagina_atual == "inicio":
+
+        
         if p:
             pont_pass = pont
         menu.desenha(screen,background_image,init,pont_pass,new_dica)
