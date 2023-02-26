@@ -47,18 +47,23 @@ class Menu:
 'A culpa nunca é dos desenvolvedores',
 'Eu fico pensando que o motivo pelo qual eu sou tão sozinho é minha enorme raba',
 'Siga "Emerson Perigo" nas redes sociais',
-'Doce de leite é melhor que brigadeiro',
+'Doce de leite ruim é melhor que brigadeiro bom',
 'o homem nasce bom, mas bits Gui nasm o corrompe',
-'"O amor é uma flor roxa que nasce no coração dos troxa" - Platão',
+'O amor é uma flor roxa que nasce no coração dos troxa',
 'To ficando Tchubiraumdaun das ideia',
-'"se tiver em dúvida entre Rivotril e Ritalina, use os dois" - Dr. Auzio Varella',
+'se tiver em dúvida entre Rivotril e Ritalina, use os dois',
 'Nada é ilegal se a polícia não souber',
 'Misture amônia com alvejante, muito legal',
 'Se um dia for para maresias, visite o capeta do nenê. Ele é DJ',
 'Frequente o Tomás Uma Bar, melhor espetinho da Santa Cecília',
 'Conheci um cara que o pai dele também era seu primo',
 'Tenho pena de quem não me conhece',
-'Meu pai é agiota']
+'Meu pai é agiota',
+'Eu não aguento mais',
+'Visite Cascadura',
+'Ainda bem que eu não sou você :)',
+'O mundo gira e vacilão roda',
+'A vida é Freud a']
         
         self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
