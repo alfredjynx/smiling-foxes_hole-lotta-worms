@@ -117,7 +117,9 @@ while rodando:
                     new_dica=True
                 elif menu.atualiza_quit(event.pos):
                     rodando = False
-            
+                elif menu.atualiza_dica(event.pos):
+                    new_dica = True
+
             else:
                 # se não for no Header, registrar o click
                 if mous_pos[1]>100 and pagina_atual == "jogo":
