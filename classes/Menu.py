@@ -79,7 +79,8 @@ class Menu:
 'Parmegiana de frango trocando batata por ovo',
 'O Léo é a minhoca',
 'Ações do robô: direita, esquerda, sugar',
-'Quando eu morrer eu quero se enterrada de lado']
+'Quando eu morrer eu quero se enterrada de lado',
+'Pelo amor de deus eu preciso de nota, tenha piedade']
         
         self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
