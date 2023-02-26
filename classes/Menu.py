@@ -50,7 +50,7 @@ class Menu:
 'Eu fico pensando que o motivo pelo qual eu sou tão sozinho é minha enorme raba',
 'Siga "Emerson Perigo" nas redes sociais',
 'Doce de leite ruim é melhor que brigadeiro bom',
-'o homem nasce bom, mas bits Gui nasm o corrompe',
+'O homem nasce bom, mas bits Gui nasm o corrompe',
 'O amor é uma flor roxa que nasce no coração dos troxa',
 'To ficando Tchubiraumdaun das ideia',
 'se tiver em dúvida entre Rivotril e Ritalina, use os dois',
@@ -66,8 +66,9 @@ class Menu:
 'Ainda bem que eu não sou você :)',
 'O mundo gira e vacilão roda',
 'Em dezembro de 81',
-'Não',
-'quarto 309',
+'Pra ter dica tem que comer legume',
+'não',
+'Quarto 309',
 'O Leo é o novo Barros',
 'Primeiro date na ROOM. Foi cagada...',
 'Fecapejada',
@@ -78,7 +79,7 @@ class Menu:
 'Parmegiana de frango trocando batata por ovo',
 'O Léo é a minhoca',
 'Ações do robô: direita, esquerda, sugar',
-'Quando eu morrer eu quero se enterrado de lado']
+'Quando eu morrer eu quero se enterrada de lado']
         
         self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
