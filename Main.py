@@ -73,6 +73,7 @@ pagina_atual = "inicio" # página atual do jogo, inicialmente é a página inici
 pont = 0 # pontuação
 init = True # Vê se é a primeira vez que o Pygame é rodado
 p = True
+new_dica = False
 
 # se "rodando" for true, entrar no while
 while rodando:
@@ -113,6 +114,7 @@ while rodando:
                     pagina_atual = "jogo"
                     p = True
                     init = False
+                    new_dica=True
                 elif menu.atualiza_quit(event.pos):
                     rodando = False
             
@@ -238,7 +240,7 @@ while rodando:
         screen.blit(planeta, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
 
         for i in range(len(obst)):
-            screen.blit(lixo, (obst[i].getRect()[0],obst[i].getRect()[1]))
+            screen.blit(lixo, (obst[i].getRect()[0]-25,obst[i].getRect()[1]-25))
 
         # Desenhar goal
         pygame.draw.circle(screen,"WHITE",s0,5)
@@ -251,7 +253,7 @@ while rodando:
     elif pagina_atual == "inicio":
         if p:
             pont_pass = pont
-        menu.desenha(screen,background_image,init,pont_pass)
+        menu.desenha(screen,background_image,init,pont_pass,new_dica)
         
         # Update the screen
         pygame.display.flip()
@@ -269,6 +271,7 @@ while rodando:
         pagina_atual = "inicio"
         pont = 0 #pontuação
         p = False
+        new_dica = False
 
 
     # reinicialização das listas de vetores, para possibilitar a utilização em loops posteriores

@@ -1,5 +1,6 @@
 import numpy
 import pygame
+import random
 
 class Menu:
     def __init__(self) -> None:
@@ -23,14 +24,20 @@ class Menu:
         self.start = pygame.Rect((0,0),(260,45))
         self.start.center = (800 // 2, 600 // 2)
 
-        self.dicas = ['Mudar a velocidade afeta todos os projéteis da tela, não só os que serão disparados',
+        self.dicas = ['Mudar a velocidade afeta TODOS os projéteis da tela',
                       'A hitbox das lixeiras é menor do que a imagem delas',
                       'Algumas fases impossíveis são possíveis por meio da sorte',
                       'Por favor me dá uma nota alta Tiagão, nunca te pedi nada',
-                      '']
+                      'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH',
+                      'As vezes eu acho que a felicidade é momentânea e o sofrimento é eterno',
+                      'O problema não é dirigir bêbado, é se acidentar bêbado',
+                      'A prática leva à perfeição, então continue apostando em casino online',
+                      'A culpa nunca é dos desenvolvedores']
+        
+        self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
 
-    def desenha(self,screen,background_image,init,pont):
+    def desenha(self,screen,background_image,init,pont,new_dica):
 
         screen.blit(background_image, (0, 0))
 
@@ -41,9 +48,24 @@ class Menu:
             rect.center = (800 // 2, 600 // 3)
             screen.blit(title_text, rect)
 
+            if new_dica:
+                self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
+            
+            font = pygame.font.SysFont(None, 25)
+            dicas = font.render(self.dica, True, (255, 255, 255))
+            rect = dicas.get_rect()
+            rect.center = (800 // 2, 600 * 0.8)
+            screen.blit(dicas, rect)
 
         else:
-            screen.blit(self.title_text, self.title_text_rect)
+                    screen.blit(self.title_text, self.title_text_rect)
+
+
+    
+
+
+
+        
 
         
         # Draw the play button

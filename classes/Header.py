@@ -19,7 +19,7 @@ class Header():
 
         self.porcentagem_forca = 0.3
 
-        self.quit = pygame.Rect((570,15),(210,35))
+        self.quit = pygame.Rect((590,15),(190,35))
     
     
     def desenha(self,pont,fase,bolas):
@@ -50,7 +50,7 @@ class Header():
         self.screen.blit(text_surface, (570,60))
         text_surface = my_font.render('QUIT', False, "WHITE")
         rect = text_surface.get_rect()
-        rect.center = (570+105,15+35/2)
+        rect.center = (590+95,15+35/2)
         self.screen.blit(text_surface, rect)
 
         
