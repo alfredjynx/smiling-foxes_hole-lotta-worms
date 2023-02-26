@@ -71,7 +71,8 @@ class Menu:
 'Japonesas em Porto Seguro',
 'Parmegiana de frango trocando batata por ovo',
 'O Léo é a minhoca',
-'Ações do robô: direita, esquerda, sugar']
+'Ações do robô: direita, esquerda, sugar',
+'Quando eu morrer eu quero se enterrado de lado']
         
         self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
