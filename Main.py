@@ -46,17 +46,18 @@ menu = Menu()
 
 background_image = pygame.image.load("./sprites/buraco.png")
 
-planeta = pygame.image.load("./sprites/planet_pixel.png")
-# lixo = pygame.image.load("./sprites/lixo.png")
+# Origem do planeta: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngaaa.com%2Fdetail%2F598136&psig=AOvVaw1ObVK793mvXVoAt81mulO0&ust=1677537952656000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCMiC4P2htP0CFQAAAAAdAAAAABAE
+planeta = pygame.image.load("./sprites/planet_pixel-remove.png")
 
 # Origem da imagem do lixo: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-nhvgc&psig=AOvVaw2SIPcnyBhCR9_JSLz4dZF3&ust=1677415653254000&source=images&cd=vfe&ved=0CBAQjhxqFwoTCOjoxK_asP0CFQAAAAAdAAAAABAE
 lixo = pygame.image.load("./sprites/garbage-removebg.png")
 
-# Origem da iamgem do lixo: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-nhvgc&psig=AOvVaw3mx7-cZVaF9vqfaWQ86gd5&ust=1677417200573000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCPjx_5HgsP0CFQAAAAAdAAAAABAK
-# lixo = pygame.image.load("./sprites/lixo.png")
+# Origem da imagem da nave: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vectorstock.com%2Froyalty-free-vector%2Fretro-spaceship-pixel-art-game-rocket-at-night-vector-26751070&psig=AOvVaw3mymLtwmWLAGREzrvxcsCM&ust=1677537799200000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCIiyxrShtP0CFQAAAAAdAAAAABAE
+ship = pygame.image.load("./sprites/ship.png")
 
-planeta = pygame.transform.scale(planeta, (80, 80))
-lixo = pygame.transform.scale(lixo, (10, 10))
+planeta = pygame.transform.scale(planeta, (90, 80))
+lixo = pygame.transform.scale(lixo, (80, 80))
+ship = pygame.transform.scale(ship, (80, 80))
 
 fox = pygame.image.load("./sprites/fox.png")
 fox = pygame.transform.scale(fox, (10, 10))
@@ -237,14 +238,6 @@ while rodando:
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
-    # if pagina_atual == "inicio" and not tocando:
-    #     musica.play()
-    #     tocando = True
-
-    # if pagina_atual == "jogo":
-    #     musica.stop()
-    #     tocando = False
-
     if pagina_atual == "jogo":
         
         # Desenhar fundo
@@ -256,25 +249,21 @@ while rodando:
 
         header.desenha(pont,f,b)
 
-        # Desenhar personagem
+        # Desenhar bolinhas/tiros
         for i in range(n):
             rect = pygame.Rect(s[i]-np.array([3,3]), (10,10))  # First tuple is position, second is size.
             screen.blit(fox, rect)
 
-        # BLIT PLANETAS 
-        # planeta = pygame.image.load("./sprites/planeta1.png")
-        planeta = pygame.Surface((100,100))
-        planeta = pygame.transform.scale(planeta,(50,50))
-
-        lixo = pygame.transform.scale(lixo, (80, 80))
+        # BLIT PLANETA
         screen.blit(planeta, (corpo.get_pos()[0]-25 ,corpo.get_pos()[1] -25))
 
         for i in range(len(obst)):
-            screen.blit(lixo, (obst[i].getRect()[0]-25,obst[i].getRect()[1]-25))
+            screen.blit(lixo, (obst[i].getRect()[0]-15,obst[i].getRect()[1]-15))
+        
+        pygame.draw.circle(screen,"WHITE",s0,5)
 
         # Desenhar goal
-        pygame.draw.circle(screen,"WHITE",s0,5)
-        pygame.draw.rect(screen,"GREEN",goal.getRect())
+        screen.blit(ship, (goal.getPos()[0]-25 ,goal.getPos()[1] -25))
 
         # Update!
         pygame.display.update()
