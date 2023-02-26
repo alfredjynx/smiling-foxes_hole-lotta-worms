@@ -5,9 +5,11 @@ from classes.Ret import Ret
 from classes.Header import Header
 from classes.Menu import Menu
 import random
+import pygame.mixer
 
 # inicialização do Pygame
 pygame.init()
+pygame.mixer.init()
 
 # Tamanho da tela e definição do FPS
 screen = pygame.display.set_mode((800, 600))
@@ -59,6 +61,12 @@ lixo = pygame.transform.scale(lixo, (10, 10))
 fox = pygame.image.load("./sprites/fox.png")
 fox = pygame.transform.scale(fox, (10, 10))
 
+# load dos sons
+som_tiro = pygame.mixer.Sound("./sons/tiro.mp3")
+som_tiro.set_volume(0.5)
+som_explosao = pygame.mixer.Sound("./sons/explosao.mp3")
+som_click = pygame.mixer.Sound("./sons/click.mp3")
+som_click.set_volume(0.5)
 
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela
@@ -111,13 +119,16 @@ while rodando:
             # se o click for no botão de inicio, mudar a página atual para "jogo"
             if pagina_atual=="inicio":
                 if menu.atualiza_jogo(event.pos):
+                    som_click.play()
                     pagina_atual = "jogo"
                     p = True
                     init = False
                     new_dica=True
                 elif menu.atualiza_quit(event.pos):
+                    som_click.play()
                     rodando = False
                 elif menu.atualiza_dica(event.pos):
+                    som_click.play()
                     new_dica = True
 
             else:
@@ -129,6 +140,7 @@ while rodando:
                     # print("mouse down")
                     header.atualiza_estado()
                     if header.atualiza_quit(mous_pos):
+                        som_click.play()
                         pagina_atual = "inicio"
 
     if not rodando:
@@ -136,6 +148,7 @@ while rodando:
 
     # se houve click na tela, adicionar uma bolinha na lista e retirar um dos valores das bolinhas disponíveis (apenas funciona se houver click e bolinhas disponíveis)
     if mouse_click and b>0:
+        som_tiro.play()
         b-=1
         v.append((v1/norm*10+rndm))
         s.append(s0)
@@ -152,6 +165,7 @@ while rodando:
     for i in range(n):
         # se você atingir o objetivo (Goal), randomizar o nível e adicionar um valor na variável de "número de fase" (f), assim como +2 blinhas adicionadas no "pente" da arma
         if goal.collide(s[i]):
+            som_explosao.play()
             f+=1
             b+=2
             pont+=10*(1 + f/10)

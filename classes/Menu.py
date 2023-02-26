@@ -36,6 +36,8 @@ class Menu:
         self.dica_rect = pygame.Rect((0,0),(120,30))
         self.dica_rect.center = self.dica_button_text_rect.center
 
+        self.som_click = pygame.mixer.Sound("./sons/click.mp3")
+
 
         self.dicas = ['Mudar a velocidade afeta TODOS os projéteis da tela',
 'A hitbox das lixeiras é menor do que a imagem delas',
@@ -65,6 +67,10 @@ class Menu:
 'O mundo gira e vacilão roda',
 'Em dezembro de 81',
 'Não',
+'quarto 309',
+'O Leo é o novo Barros',
+'Primeiro date na ROOM. Foi cagada...',
+'Fecapejada',
 'Jogo do Flamengo na CazéTV é sacanagem',
 'Pra quem está começando na academia, recomendo trembolona',
 '... mas foi pouco',
@@ -106,14 +112,6 @@ class Menu:
 
         else:
                     screen.blit(self.title_text, self.title_text_rect)
-
-
-    
-
-
-
-        
-
         
         # Draw the play button
         pygame.draw.rect(screen, (0, 0, 0), (self.play_button_text_rect.left - 100, self.play_button_text_rect.top - 10, self.play_button_text_rect.width + 200, self.play_button_text_rect.height + 20))
