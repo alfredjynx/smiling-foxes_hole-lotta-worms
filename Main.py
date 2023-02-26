@@ -69,7 +69,8 @@ som_click = pygame.mixer.Sound("./sons/click.mp3")
 som_click.set_volume(0.5)
 
 musica = pygame.mixer.Sound("./sons/musica.mp3")
-tocando = False
+# tocando = False
+musica.play()
 
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela
@@ -236,13 +237,13 @@ while rodando:
         s[i] = s[i] + header.get_porcentagem_forca() * v[i]
 
 
-    if pagina_atual == "inicio" and not tocando:
-        musica.play()
-        tocando = True
+    # if pagina_atual == "inicio" and not tocando:
+    #     musica.play()
+    #     tocando = True
 
-    if pagina_atual == "jogo":
-        musica.stop()
-        tocando = False
+    # if pagina_atual == "jogo":
+    #     musica.stop()
+    #     tocando = False
 
     if pagina_atual == "jogo":
         
