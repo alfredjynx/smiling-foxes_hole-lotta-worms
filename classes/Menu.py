@@ -58,12 +58,20 @@ class Menu:
 'Frequente o Tomás Uma Bar, melhor espetinho da Santa Cecília',
 'Conheci um cara que o pai dele também era seu primo',
 'Tenho pena de quem não me conhece',
-'Meu pai é agiota',
+'Meu pai é agiota, minha mãe é filósofa e meu tio é carteiro',
 'Eu não aguento mais',
 'Visite Cascadura',
 'Ainda bem que eu não sou você :)',
 'O mundo gira e vacilão roda',
-'A vida é Freud a']
+'Em dezembro de 81',
+'Não',
+'Jogo do Flamengo na CazéTV é sacanagem',
+'Pra quem está começando na academia, recomendo trembolona',
+'... mas foi pouco',
+'Japonesas em Porto Seguro',
+'Parmegiana de frango trocando batata por ovo',
+'O Léo é a minhoca',
+'Ações do robô: direita, esquerda, sugar']
         
         self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
