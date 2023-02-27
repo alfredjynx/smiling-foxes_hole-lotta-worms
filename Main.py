@@ -10,6 +10,7 @@ import pygame.mixer
 # inicialização do Pygame
 pygame.init()
 pygame.mixer.init()
+pygame.display.set_caption("Smiling Foxes")
 
 # Tamanho da tela e definição do FPS
 screen = pygame.display.set_mode((800, 600))
@@ -70,6 +71,7 @@ som_click = pygame.mixer.Sound("./sons/click.mp3")
 som_click.set_volume(0.5)
 
 # sorteia uma musica para ser tocada
+paths = np.array([ "./sons/musica.mp3" ])
 paths = np.array(["./sons/amor.mp3", "./sons/musica.mp3", "./sons/creu.mp3", "./sons/todatoda.mp3" ])
 musica_escolhida = np.random.choice(paths)
 musica = pygame.mixer.Sound(musica_escolhida)
