@@ -154,18 +154,6 @@ while rodando:
     if not rodando:
         break
 
-    # se houve click na tela, adicionar uma bolinha na lista e retirar um dos valores das bolinhas disponíveis (apenas funciona se houver click e bolinhas disponíveis)
-    if mouse_click and b>0:
-        som_tiro.play()
-        b-=1
-        v.append((v1/norm*10+rndm))
-        s.append(s0)
-        mouse_click = False
-        n = len(v)
-    # se as bolinhas acabarem, checar se ainda há bolinhas em jogo
-    elif b==0:
-        check_n = True
-
     # para a checagem de se as bolas estão em jogo
     em_jogo = list()
 
@@ -206,6 +194,18 @@ while rodando:
 
             # utilizado para fazer um update na lista de vetores e posições principal ("v" e "s" respectivamente)
             em_jogo.append(valor)
+
+    # se houve click na tela, adicionar uma bolinha na lista e retirar um dos valores das bolinhas disponíveis (apenas funciona se houver click e bolinhas disponíveis)
+    if mouse_click and b>0:
+        som_tiro.play()
+        b-=1
+        v.append((v1/norm*10+rndm))
+        s.append(s0)
+        mouse_click = False
+        n = len(v)
+    # se as bolinhas acabarem, checar se ainda há bolinhas em jogo
+    elif b==0:
+        check_n = True
 
     # se houverem bolinhas em jogo
     if n>0:
