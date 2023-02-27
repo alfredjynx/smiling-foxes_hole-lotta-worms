@@ -1,7 +1,7 @@
 # smiling-foxes_hole-lotta-worms
 Exercício em Álgebra Linear e utilização de vetores. O jogo tem como objetivo um alvo (a espaçonave) que deve ser atingido pelo projétil que é lançado pelo jogador. Utilizando uma fórmula física que descreve o processo de atração gravitacional dos corpos, além de operações matemáticas que utilizam contas com vetores (matrizes), foi possível a criação de um jogo onde os projéteis são afetados pelos campos gravitacionais do planeta presente na tela. 
 
-Para jogar, basta rodar o arquivo Main.py. Se houver algum erro com as bibliotecas, certifique-se que você possui as bibliotecas necessárias (dentro do requirements.txt). A tela de início lhe mostra o título do jogo e dois botões, o botão de jogar inicia o jogo, o de quit interrompe o código e cessa o programa. 
+Para jogar, basta clonar o repositório do github e rodar o arquivo Main.py. Se houver algum erro com as bibliotecas, certifique-se que você possui as bibliotecas necessárias (dentro do requirements.txt). Para intalá-las, é necessário rodar o comando: "". A tela de início lhe mostra o título do jogo e dois botões, o botão de jogar inicia o jogo, o de quit interrompe o código e cessa o programa. 
 
 Ao clicar jogar, você será levado a uma nova tela, com um fundo espacial. Para atirar, basta selecionar a força com a qual quer lançar o projétil (clicando na barra no seletor superior, também chamado de HEADER) e clicar na tela principal (o que não é contemplado pelo HEADER). O ponto de lançamento é uma bolinha branca no canto inferior esquerdo da tela. Dentro do HEADER também é possível ver o nível atual, a pontuação do jogador e o número de tentativas restantes (possíveis de serem disparadas). Na verdade, os projéteis disparados são pequenos astronautas, por isso a escolha da nave como alvo (voltando para um local seguro). É possível observar que o astronauta disparada vai em direção ao cursor, então, o utilize na hora de mirar.
 
@@ -18,4 +18,6 @@ O jogo apenas termina quando todas as tentativas disponíveis foram gastas e nã
 Quando o jogador utilizar todas as suas tentativas, seré levado à tela de início, onde a sua pontuação será exibida no local do título do jogo, assim como uma dica também aparecerá abaixo do botão de quit. Esse dica pode ser mudada por meio do botão "nova dica", mas elas não são exatamente úteis para o jogo, são mais como conselhos de vida eu diria. 
 
 Isso é tudo, aproveite nosso jogo (especialmente as dicas).
+
+https://user-images.githubusercontent.com/80931256/221445118-c054cd79-da78-48ff-81ca-51d5b9fab483.mov
 

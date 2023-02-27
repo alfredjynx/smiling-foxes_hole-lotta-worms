@@ -80,8 +80,7 @@ class Menu:
 'Pelo amor de deus eu preciso de nota, tenha piedade',
 'Seria daora se esse jogo fosse igual Jumanji',
 'Você tá bem?',
-'sono',
-'']
+'sono']
         
         self.dica = self.dicas[random.randint(0,len(self.dicas)-1)]
         
