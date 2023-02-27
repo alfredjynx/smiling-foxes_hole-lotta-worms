@@ -75,7 +75,7 @@ paths = np.array(["./sons/amor.mp3", "./sons/musica.mp3", "./sons/creu.mp3", "./
 musica_escolhida = np.random.choice(paths)
 musica = pygame.mixer.Sound(musica_escolhida)
 # tocando = False
-musica.play()
+musica.play(-1)
 
 # Inicialização das variáveis utilizadas nas verificações do código
 n = len(v) #número de bolinhas na tela

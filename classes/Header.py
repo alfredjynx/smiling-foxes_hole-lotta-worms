@@ -46,6 +46,7 @@ class Header():
         self.screen.blit(text_surface, (440,20))
         text_surface = my_font.render(f'Fase - {int(fase)}', False, (0, 0, 0))
         self.screen.blit(text_surface, (440,60))
+        my_font = pygame.font.SysFont('consolas', 15)
         text_surface = my_font.render(f'Tentativas Restantes - {int(bolas)}', False, (0, 0, 0))
         self.screen.blit(text_surface, (570,60))
         text_surface = my_font.render('QUIT', False, "WHITE")
