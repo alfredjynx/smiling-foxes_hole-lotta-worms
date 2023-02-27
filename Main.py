@@ -69,7 +69,8 @@ som_explosao = pygame.mixer.Sound("./sons/explosao.mp3")
 som_click = pygame.mixer.Sound("./sons/click.mp3")
 som_click.set_volume(0.5)
 
-musica = pygame.mixer.Sound("./sons/musica.mp3")
+# musica = pygame.mixer.Sound("./sons/musica.mp3")
+musica = pygame.mixer.Sound("./sons/amor.mp3")
 # tocando = False
 musica.play()
 

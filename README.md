@@ -18,3 +18,4 @@ O jogo apenas termina quando todas as tentativas disponíveis foram gastas e nã
 Quando o jogador utilizar todas as suas tentativas, seré levado à tela de início, onde a sua pontuação será exibida no local do título do jogo, assim como uma dica também aparecerá abaixo do botão de quit. Esse dica pode ser mudada por meio do botão "nova dica", mas elas não são exatamente úteis para o jogo, são mais como conselhos de vida eu diria. 
 
 Isso é tudo, aproveite nosso jogo (especialmente as dicas).
+
