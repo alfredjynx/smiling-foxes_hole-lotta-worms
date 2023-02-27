@@ -264,7 +264,7 @@ while rodando:
         pygame.draw.circle(screen,"WHITE",s0,5)
 
         # Desenhar goal
-        screen.blit(ship, (goal.getPos()[0]-25 ,goal.getPos()[1] -25))
+        screen.blit(ship, (goal.getPos()[0]-15 ,goal.getPos()[1] -15))
 
         # Update!
         pygame.display.update()
