@@ -209,6 +209,10 @@ while rodando:
             # utilizado para fazer um update na lista de vetores e posições principal ("v" e "s" respectivamente)
             em_jogo.append(valor)
 
+    # checa se novas bolinhas foram adicionadas após o término de uma fase
+    if b>0:
+        check_n = False
+
     # se houverem bolinhas em jogo
     if n>0:
         # listas vazias para a possibilidade de append existir
@@ -283,6 +287,8 @@ while rodando:
         pygame.display.flip()
 
         # Reset de variáveis
+        v = list()
+        s = list()
         fase = {"fase":1,'corpo':Planeta(np.array([200,200]),350),"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
         n = len(v) #número de bolinhas na tela
         f = 0 #número da fase, incrementado a cada Goal atingido
