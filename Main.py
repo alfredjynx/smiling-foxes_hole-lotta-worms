@@ -45,6 +45,7 @@ personagem.fill(COR_PERSONAGEM)  # Cor do personagem
 
 menu = Menu()
 
+# Feita pelo Midjourney
 background_image = pygame.image.load("./sprites/buraco.png")
 
 # Origem do planeta: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngaaa.com%2Fdetail%2F598136&psig=AOvVaw1ObVK793mvXVoAt81mulO0&ust=1677537952656000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCMiC4P2htP0CFQAAAAAdAAAAABAE
