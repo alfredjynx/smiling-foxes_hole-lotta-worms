@@ -281,6 +281,8 @@ while rodando:
         pygame.display.flip()
 
         # Reset de variáveis
+        v = list()
+        s = list()
         fase = {"fase":1,'corpo':Planeta(np.array([200,200]),350),"v":v,"s":s,"goal":Ret((350,350),(50,50)),"obst":[Ret((250,250),(50,50))]}
         n = len(v) #número de bolinhas na tela
         f = 0 #número da fase, incrementado a cada Goal atingido
